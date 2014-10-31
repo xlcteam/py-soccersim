@@ -24,10 +24,10 @@ if __name__ == "__main__":
 
     env = Env('teamA', 'teamB', [WIDTH, HEIGHT], display)
 
-    robotA1 = Robot(env, [140, 200], [21*3, 21*3], -90, (255,0,0), b2world)
-    robotA2 = Robot(env, [140, 356], [21*3, 21*3], -90, (255,0,122), b2world)
-    robotB1 = Robot(env, [580, 200], [21*3, 21*3], 90, (0,255,0), b2world)
-    robotB2 = Robot(env, [580, 356], [21*3, 21*3], 90, (0,255,122), b2world)
+    robotA1 = Robot(env, (140, 200), (21*3, 21*3), -90, (255, 0, 0), b2world)
+    robotA2 = Robot(env, (140, 356), (21*3, 21*3), -90, (255, 0, 122), b2world)
+    robotB1 = Robot(env, (580, 200), (21*3, 21*3), 90, (0, 255, 0), b2world)
+    robotB2 = Robot(env, (580, 356), (21*3, 21*3), 90, (0, 255, 122), b2world)
 
     robotA1.vec = [100, 0]
 
@@ -40,14 +40,14 @@ if __name__ == "__main__":
     props = []
     # goal props
     # back
-    props.append(BoxProp(env, {'size':[6, 187], 'position':[48, 180]}, b2world))
-    props.append(BoxProp(env, {'size':[6, 187], 'position':[673, 180]}, b2world))
+    props.append(BoxProp(env, {'size': [6, 187], 'position': [48, 180]}, b2world))
+    props.append(BoxProp(env, {'size': [6, 187], 'position': [673, 180]}, b2world))
     # top
-    props.append(BoxProp(env, {'size':[37, 7], 'position':[49, 180]}, b2world))
-    props.append(BoxProp(env, {'size':[37, 7], 'position':[643, 180]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [49, 180]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [643, 180]}, b2world))
     # bottom
-    props.append(BoxProp(env, {'size':[37, 7], 'position':[49, 361]}, b2world))
-    props.append(BoxProp(env, {'size':[37, 7], 'position':[643, 361]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [49, 361]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [643, 361]}, b2world))
 
     running = True
     while running:
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
             if event.type in [pygame.MOUSEBUTTONDOWN, pygame.MOUSEMOTION]:
                 for robot in robots:
-                    robot.event_response(event)                    
+                    robot.event_response(event)
 
         env.draw_field()
         for robot in robots:

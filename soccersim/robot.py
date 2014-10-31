@@ -12,13 +12,17 @@ class Robot:
 
         self.dragging = False
 
-        self.vec = [0, 0]
+        self.vec = (0, 0)
 
-        self.originalImg = pygame.Surface((self.dims[0], self.dims[1]), pygame.SRCALPHA, 32)
+        self.originalImg = pygame.Surface(self.dims, pygame.SRCALPHA, 32)
         self.originalImg.convert_alpha()
-        pygame.draw.circle(self.originalImg, self.color, [self.dims[0]/2, self.dims[1]/2], self.radius)
+
+        center = [self.dims[0]/2, self.dims[1]/2]
+
+        pygame.draw.circle(self.originalImg, self.color, center, self.radius)
         pygame.draw.circle(self.originalImg, (255, 255, 255),
-                           [self.dims[0]/2, self.dims[1]/10], self.dims[1]/5)
+                           [self.dims[0]/2, self.dims[1]/10],
+                           self.dims[1]/5)
 
         self.image = pygame.transform.rotate(self.originalImg, self.rotation)
         self.rect = pygame.Rect(pos[0], pos[1], 0, 0)
@@ -46,7 +50,7 @@ class Robot:
     def update(self):
         vec = (0, 0)
         if not self.dragging:
-            vec = (self.vec[0], self.vec[1])
+            vec = self.vec
         self.body.linearVelocity = vec
 
     def mouse_over(self, pos):
