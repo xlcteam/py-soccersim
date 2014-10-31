@@ -29,6 +29,8 @@ if __name__ == "__main__":
     robotB1 = Robot(env, [580, 200], [21*3, 21*3], 90, (0,255,0), b2world)
     robotB2 = Robot(env, [580, 356], [21*3, 21*3], 90, (0,255,122), b2world)
 
+    robotA1.vec = [100, 0]
+
     robots = []
     robots.append(robotA1)
     robots.append(robotA2)
@@ -59,6 +61,7 @@ if __name__ == "__main__":
 
         env.draw_field()
         for robot in robots:
+            robot.update()
             robot.draw()
 
         for prop in props:
@@ -68,11 +71,10 @@ if __name__ == "__main__":
         pygame.display.flip()
         clock.tick(FPS)
 
+        b2world.ClearForces()
+
     pygame.quit()
     print "Quit"
-
-
-
 
 
 
