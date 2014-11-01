@@ -2,6 +2,7 @@ import pygame
 import Box2D
 import math
 
+
 class Ball:
     def __init__(self, env, pos, dims, color, field, robots, b2world):
         self.env = env
@@ -16,8 +17,8 @@ class Ball:
         self.image = pygame.Surface(self.dims, pygame.SRCALPHA, 32)
         self.image.convert_alpha()
         pygame.draw.circle(self.image, self.color,
-                          [self.dims[0]//2, self.dims[1]//2],
-                          self.radius)
+                           [self.dims[0]//2, self.dims[1]//2],
+                           self.radius)
 
         self.body = b2world.CreateDynamicBody(
             position=(pos[0], pos[1]),
@@ -33,23 +34,24 @@ class Ball:
             restitution=0.4,
         )
 
-        self.neutral_spots = { "topleft" : [224, 185],
-                               "topright": [503, 185],
-                               "bottomleft": [224, 363],
-                               "bottomright": [503, 363],
-                               "center": [self.field[0]//2,
-                                          self.field[1]//2]
-                            }
+        self.neutral_spots = {
+            "topleft": [224, 185],
+            "topright": [503, 185],
+            "bottomleft": [224, 363],
+            "bottomright": [503, 363],
+            "center": [self.field[0]//2,
+                       self.field[1]//2]
+        }
 
         self.following_spots = {
-            "topleft" : ["topleft", "bottomleft", "center", 
+            "topleft": ["topleft", "bottomleft", "center",
                         "topright", "bottomright"],
-            "topright": ["topright", "bottomright", "center", 
-                        "topleft", "bottomleft"],
-            "bottomleft": ["bottomleft", "topleft", "center", 
-                        "bottomright", "topright"],
-            "bottomright": ["bottomright", "topright", "center", 
-                        "bottomleft", "topleft"]}
+            "topright": ["topright", "bottomright", "center",
+                         "topleft", "bottomleft"],
+            "bottomleft": ["bottomleft", "topleft", "center",
+                           "bottomright", "topright"],
+            "bottomright": ["bottomright", "topright", "center",
+                            "bottomleft", "topleft"]}
 
     def draw(self):
         pos = self.body.worldCenter
@@ -60,8 +62,8 @@ class Ball:
         self.env.display.blit(self.image, rect)
 
     def move_to_uns(self, spot):
-        vec = Box2D.b2Vec2(self.neutral_spots[spot][0], 
-                            self.neutral_spots[spot][1])
+        vec = Box2D.b2Vec2(self.neutral_spots[spot][0],
+                           self.neutral_spots[spot][1])
         self.body.worldCenter = vec
         self.body.linearVelocity = (0, 0)
 
@@ -92,7 +94,7 @@ class Ball:
         elif self.rect.left > 656 or self.rect.top > 473:
             return True
 
-        return False 
+        return False
 
     def stay_in(self):
         if self.ball_outside():

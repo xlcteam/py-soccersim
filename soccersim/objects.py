@@ -19,6 +19,8 @@ class BoxProp:
         bdef.angle = 0
         bdef.fixedRotation = True
         self.body = world.CreateBody(bdef)
+
+        # strange rect due to Box2D's way of representing objects
         self.rect = pygame.rect.Rect(self.pos[0] - self.size[0]/2,
                                      self.pos[1] - self.size[1]/2,
                                      self.size[0], self.size[1])
