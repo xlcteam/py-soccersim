@@ -7,6 +7,7 @@ from Box2D.b2 import *
 from env import Env
 from robot import Robot
 from objects import BoxProp
+from ball import Ball
 
 if __name__ == "__main__":
     WIDTH = 729
@@ -23,6 +24,9 @@ if __name__ == "__main__":
     b2world = Box2D.b2World(gravity=(0, 0), doSleep=False)
 
     env = Env('teamA', 'teamB', [WIDTH, HEIGHT], display)
+
+    ball = Ball(env, (WIDTH//2, HEIGHT//2), (8*3, 8*3), (100, 75, 81),
+                (WIDTH, HEIGHT), b2world)
 
     robotA1 = Robot(env, (140, 200), (21*3, 21*3), -90, (255, 0, 0), b2world)
     robotA2 = Robot(env, (140, 356), (21*3, 21*3), -90, (255, 0, 122), b2world)
@@ -63,6 +67,8 @@ if __name__ == "__main__":
         for robot in robots:
             robot.update()
             robot.draw()
+
+        ball.draw()
 
         for prop in props:
             prop.draw()
