@@ -1,6 +1,7 @@
 import pygame
 import Box2D
 
+
 class BoxProp:
     def __init__(self, env, pars, b2world):
         # static rectangle shaped prop
@@ -18,7 +19,8 @@ class BoxProp:
         bdef.angle = 0
         bdef.fixedRotation = True
         self.body = b2world.CreateBody(bdef)
-        self.rect = pygame.rect.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
+        self.rect = pygame.rect.Rect(self.pos[0], self.pos[1],
+                                     self.size[0], self.size[1])
 
         # initialize shape
         fixdef = Box2D.b2FixtureDef()

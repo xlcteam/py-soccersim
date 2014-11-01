@@ -29,7 +29,8 @@ if __name__ == "__main__":
     robotB1 = Robot(env, (580, 200), (21*3, 21*3), 90, (0, 255, 0), b2world)
     robotB2 = Robot(env, (580, 356), (21*3, 21*3), 90, (0, 255, 122), b2world)
 
-    robotA1.vec = [100, 0]
+    robotA1.vec = (100, 0)
+    robotA2.vec = (100, 0)
 
     robots = []
     robots.append(robotA1)
@@ -40,14 +41,14 @@ if __name__ == "__main__":
     props = []
     # goal props
     # back
-    props.append(BoxProp(env, {'size': [6, 187], 'position': [48, 180]}, b2world))
-    props.append(BoxProp(env, {'size': [6, 187], 'position': [673, 180]}, b2world))
+    props.append(BoxProp(env, {'size': [6, 187], 'position': [50, 272]}, b2world))
+    props.append(BoxProp(env, {'size': [6, 187], 'position': [673, 272]}, b2world))
     # top
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [49, 180]}, b2world))
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [643, 180]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [66, 183]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [660, 183]}, b2world))
     # bottom
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [49, 361]}, b2world))
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [643, 361]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [66, 364]}, b2world))
+    props.append(BoxProp(env, {'size': [37, 7], 'position': [660, 364]}, b2world))
 
     running = True
     while running:
