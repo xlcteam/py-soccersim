@@ -1,12 +1,15 @@
 import pygame
 
+
 class Env:
-    def __init__(self, teamA, teamB, field_size, display):
+    def __init__(self, teamA, teamB, field_size, display, debug=False):
         self.teamA = teamA
         self.teamB = teamB
         self.width = field_size[0]
         self.height = field_size[1]
         self.display = display
+
+        self.debug = debug
 
         self.field = pygame.image.load('img/field.png')
 

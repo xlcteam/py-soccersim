@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     b2world = Box2D.b2World(gravity=(0, 0), doSleep=False)
 
-    env = Env('teamA', 'teamB', [WIDTH, HEIGHT], display)
+    env = Env('teamA', 'teamB', [WIDTH, HEIGHT], display, debug=True)
 
     robotA1 = Robot(env, (140, 200), (21*3, 21*3), -90, (255, 0, 0), b2world)
     robotA2 = Robot(env, (140, 356), (21*3, 21*3), -90, (255, 0, 122), b2world)
@@ -39,16 +39,15 @@ if __name__ == "__main__":
     robots.append(robotB2)
 
     props = []
-    # goal props
     # back
-    props.append(BoxProp(env, {'size': [6, 187], 'position': [50, 272]}, b2world))
-    props.append(BoxProp(env, {'size': [6, 187], 'position': [673, 272]}, b2world))
+    props.append(BoxProp(env, size=[6, 187], pos=[50, 272], world=b2world))
+    props.append(BoxProp(env, size=[6, 187], pos=[673, 272], world=b2world))
     # top
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [66, 183]}, b2world))
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [660, 183]}, b2world))
+    props.append(BoxProp(env, size=[37, 7], pos=[66, 183], world=b2world))
+    props.append(BoxProp(env, size=[37, 7], pos=[660, 183], world=b2world))
     # bottom
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [66, 364]}, b2world))
-    props.append(BoxProp(env, {'size': [37, 7], 'position': [660, 364]}, b2world))
+    props.append(BoxProp(env, size=[37, 7], pos=[66, 364], world=b2world))
+    props.append(BoxProp(env, size=[37, 7], pos=[660, 364], world=b2world))
 
     running = True
     while running:
@@ -76,6 +75,3 @@ if __name__ == "__main__":
 
     pygame.quit()
     print "Quit"
-
-
-
