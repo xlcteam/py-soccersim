@@ -25,9 +25,6 @@ if __name__ == "__main__":
 
     env = Env('teamA', 'teamB', [WIDTH, HEIGHT], display, debug=True)
 
-    ball = Ball(env, (WIDTH//2, HEIGHT//2), (8*3, 8*3), (100, 75, 81),
-                (WIDTH, HEIGHT), b2world)
-
     robotA1 = Robot(env, (140, 200), (21*3, 21*3), -90, (255, 0, 0), b2world)
     robotA2 = Robot(env, (140, 356), (21*3, 21*3), -90, (255, 0, 122), b2world)
     robotB1 = Robot(env, (580, 200), (21*3, 21*3), 90, (0, 255, 0), b2world)
@@ -41,6 +38,9 @@ if __name__ == "__main__":
     robots.append(robotA2)
     robots.append(robotB1)
     robots.append(robotB2)
+
+    ball = Ball(env, (WIDTH//2, HEIGHT//2), (8*3, 8*3), (100, 75, 81),
+                (WIDTH, HEIGHT), robots, b2world)
 
     props = []
     # back

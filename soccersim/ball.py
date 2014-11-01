@@ -1,15 +1,17 @@
 import pygame
 import Box2D
-
+import math
 
 class Ball:
-    def __init__(self, env, pos, dims, color, field, b2world):
+    def __init__(self, env, pos, dims, color, field, robots, b2world):
         self.env = env
         self.dims = dims
         self.color = color
         self.rect = pygame.Rect(pos[0], pos[1], 0, 0)
         self.radius = dims[0] // 2
         self.field = field
+        self.robots = robots
+        self.dragging = False
 
         self.image = pygame.Surface(self.dims, pygame.SRCALPHA, 32)
         self.image.convert_alpha()
@@ -51,5 +53,47 @@ class Ball:
 
     def draw(self):
         pos = self.body.worldCenter
+        self.rect.left = pos.x
+        self.rect.top = pos.y
+
         rect = pygame.Rect(pos.x - self.radius, pos.y - self.radius, 0, 0)
         self.env.display.blit(self.image, rect)
+
+    def move_to_uns(self, spot):
+        vec = Box2D.b2Vec2(self.neutral_spots[spot][0], 
+                            self.neutral_spots[spot][1])
+        self.body.worldCenter = vec
+        self.body.linearVelocity = (0, 0)
+
+    def occupied(self, spot):
+        """Return true/false whether the spot is occupied"""
+        for robot in self.robots:
+            dx = self.neutral_spots[spot][0] - robot.rect.left
+            dy = self.neutral_spots[spot][1] - robot.rect.top
+            if math.sqrt(dx*dx+dy*dy) < robot.radius + self.radius:
+                return True
+
+        return False
+
+    def check_uns(self):
+        self.dragging = False
+
+        side = "top" if self.rect.top < self.field[1]/2 else "bottom"
+        side += "left" if self.rect.left < self.field[0]/2 else "right"
+
+        for spot in self.following_spots[side]:
+            if not self.occupied(spot):
+                self.move_to_uns(spot)
+                return
+
+    def ball_outside(self):
+        if self.rect.top < 73 or self.rect.left < 73:
+            return True
+        elif self.rect.left > 656 or self.rect.top > 473:
+            return True
+
+        return False 
+
+    def stay_in(self):
+        if self.ball_outside():
+            self.check_uns()

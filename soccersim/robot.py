@@ -45,6 +45,9 @@ class Robot:
 
     def draw(self):
         pos = self.body.worldCenter
+        self.rect.left = pos.x
+        self.rect.top = pos.y
+
         rect = pygame.Rect(pos.x - self.radius, pos.y - self.radius, 0, 0)
         self.env.display.blit(self.image, rect)
 
