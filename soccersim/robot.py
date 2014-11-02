@@ -11,6 +11,9 @@ class Robot:
         self.color = color
         self.radius = (21*3)//2
 
+        self.rot_mat = (-math.sin(math.radians(self.rotation)),
+                        math.sin(math.radians(self.rotation)))
+
         self.dragging = False
 
         self.vec = (0, 0)
@@ -38,10 +41,12 @@ class Robot:
 
         self.body.CreateCircleFixture(
             radius=self.radius,
-            density=1.0,
-            friction=0.3,
+            density=10.0,
+            friction=0,
             restitution=0.4
         )
+
+        self.body.mass = 10.0
 
     def draw(self):
         pos = self.body.worldCenter
@@ -70,21 +75,31 @@ class Robot:
                 self.dragging = not self.dragging
 
         elif event.type == pygame.MOUSEMOTION and self.dragging:
-            vec = Box2D.b2Vec2(event.pos[0], event.pos[1])
+            self.body.position = Box2D.b2Vec2(event.pos[0], event.pos[1])
             # self.body.SetPosition(vec) # doesnt work...
 
     def forward(self, speed):
         self.vec = (speed, 0)
-        print self.vec
+        self.rotatize()
 
     def reverse(self, speed):
         self.vec = (-speed, 0)
+        self.rotatize()
 
     def left(self, speed):
         self.vec = (0, speed)
+        self.rotatize()
 
     def right(self, speed):
         self.vec = (0, -speed)
+        self.rotatize()
 
     def stop(self):
         self.vec = (0, 0)
+
+    def rotatize(self):
+        self.vec = (self.vec[0] * self.rot_mat[0],
+                    self.vec[1] * self.rot_mat[1])
+
+    def wait(self, time):
+        pygame.time.delay(time)

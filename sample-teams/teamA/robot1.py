@@ -1,7 +1,6 @@
-import pygame
-
-
 def main(robot):
     robot.forward(20)
-    pygame.time.delay(1000)
+    robot.wait(1000)
+    robot.left(100)
+    robot.wait(1000)
     robot.stop()
