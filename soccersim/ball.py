@@ -99,3 +99,17 @@ class Ball:
     def stay_in(self):
         if self.ball_outside():
             self.check_uns()
+
+    def mouse_over(self):
+        dx = self.rect.left - pos[0]
+        dy = self.rect.top - pos[1]
+
+        return math.sqrt(dx*dx+dy*dy) < self.radius
+
+    def event_response(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.mouse_over(event.pos):
+                self.dragging = not self.dragging
+
+        elif event.type == pygame.MOUSEMOTION and self.dragging:
+            self.body.position = Box2D.b2Vec2(event.pos[0], event.pos[1])

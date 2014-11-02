@@ -99,12 +99,14 @@ if __name__ == "__main__":
             if event.type in [pygame.MOUSEBUTTONDOWN, pygame.MOUSEMOTION]:
                 for robot in robots:
                     robot.event_response(event)
+                ball.event_response()
 
         env.draw_field()
         for robot in robots:
             robot.update()
             robot.draw()
 
+        ball.stay_in()
         ball.draw()
 
         for prop in props:
