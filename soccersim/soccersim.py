@@ -39,6 +39,7 @@ if __name__ == "__main__":
 
     pygame.init()
     display = pygame.display.set_mode((WIDTH, HEIGHT+TABLE_HEIGHT))
+    display.fill((0, 86, 27))
     pygame.display.set_caption('SoccerSim')
 
     clock = pygame.time.Clock()
