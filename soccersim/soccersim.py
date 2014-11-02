@@ -83,6 +83,16 @@ if __name__ == "__main__":
     props.append(BoxProp(env, size=[37, 7], pos=[66, 364], world=b2world))
     props.append(BoxProp(env, size=[37, 7], pos=[660, 364], world=b2world))
 
+    # mantinels
+    props.append(BoxProp(env, size=[WIDTH, 3], pos=[WIDTH/2, 0],
+                            world=b2world))
+    props.append(BoxProp(env, size=[WIDTH, 3], pos=[WIDTH/2, HEIGHT],
+                            world=b2world))
+    props.append(BoxProp(env, size=[3, HEIGHT], pos=[0, HEIGHT/2],
+                            world=b2world))
+    props.append(BoxProp(env, size=[3, HEIGHT], pos=[WIDTH, HEIGHT/2],
+                            world=b2world))
+
     for robot in robots:
         robot.stop()
 
