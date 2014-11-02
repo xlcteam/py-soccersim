@@ -72,3 +72,19 @@ class Robot:
         elif event.type == pygame.MOUSEMOTION and self.dragging:
             vec = Box2D.b2Vec2(event.pos[0], event.pos[1])
             # self.body.SetPosition(vec) # doesnt work...
+
+    def forward(self, speed):
+        self.vec = (speed, 0)
+        print self.vec
+
+    def reverse(self, speed):
+        self.vec = (-speed, 0)
+
+    def left(self, speed):
+        self.vec = (0, speed)
+
+    def right(self, speed):
+        self.vec = (0, -speed)
+
+    def stop(self):
+        self.vec = (0, 0)
