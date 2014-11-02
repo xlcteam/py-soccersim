@@ -100,7 +100,7 @@ class Ball:
         if self.ball_outside():
             self.check_uns()
 
-    def mouse_over(self):
+    def mouse_over(self, pos):
         dx = self.rect.left - pos[0]
         dy = self.rect.top - pos[1]
 
