@@ -27,6 +27,9 @@ def import_(filename):
 if __name__ == "__main__":
     WIDTH = 729
     HEIGHT = 546
+    TABLE_WIDTH = WIDTH
+    TABLE_HEIGHT = 65
+
     FPS = 30.0
     TIME_STEP = 1.0/FPS
 
@@ -35,7 +38,7 @@ if __name__ == "__main__":
         sys.exit(-1)
 
     pygame.init()
-    display = pygame.display.set_mode((WIDTH, HEIGHT))
+    display = pygame.display.set_mode((WIDTH, HEIGHT+TABLE_HEIGHT))
     pygame.display.set_caption('SoccerSim')
 
     clock = pygame.time.Clock()
