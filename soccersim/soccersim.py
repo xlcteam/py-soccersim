@@ -77,8 +77,8 @@ if __name__ == "__main__":
 
     props = []
     # back
-    props.append(BoxProp(env, size=[6, 187], pos=[50, 272], world=b2world))
-    props.append(BoxProp(env, size=[6, 187], pos=[673, 272], world=b2world))
+    props.append(BoxProp(env, size=[7, 187], pos=[50, 272], world=b2world))
+    props.append(BoxProp(env, size=[7, 187], pos=[675, 272], world=b2world))
     # top
     props.append(BoxProp(env, size=[37, 7], pos=[66, 183], world=b2world))
     props.append(BoxProp(env, size=[37, 7], pos=[660, 183], world=b2world))
