@@ -75,7 +75,6 @@ class Robot:
 
     def forward(self, speed):
         self.vec = (speed, 0)
-        print self.vec
 
     def reverse(self, speed):
         self.vec = (-speed, 0)
@@ -88,3 +87,6 @@ class Robot:
 
     def stop(self):
         self.vec = (0, 0)
+
+    def wait(self, time):
+        pygame.time.delay(time)
