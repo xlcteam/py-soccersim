@@ -89,13 +89,13 @@ if __name__ == "__main__":
 
     # mantinels
     props.append(BoxProp(env, size=[WIDTH, 3], pos=[WIDTH/2, 0],
-                            world=b2world))
+                         world=b2world))
     props.append(BoxProp(env, size=[WIDTH, 3], pos=[WIDTH/2, HEIGHT],
-                            world=b2world))
+                         world=b2world))
     props.append(BoxProp(env, size=[3, HEIGHT], pos=[0, HEIGHT/2],
-                            world=b2world))
+                         world=b2world))
     props.append(BoxProp(env, size=[3, HEIGHT], pos=[WIDTH, HEIGHT/2],
-                            world=b2world))
+                         world=b2world))
 
     for robot in robots:
         robot.stop()
@@ -131,4 +131,3 @@ if __name__ == "__main__":
         clock.tick(FPS)
 
     pygame.quit()
-    print "Quit"
