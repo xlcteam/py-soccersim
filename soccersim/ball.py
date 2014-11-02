@@ -62,9 +62,8 @@ class Ball:
         self.env.display.blit(self.image, rect)
 
     def move_to_uns(self, spot):
-        vec = Box2D.b2Vec2(self.neutral_spots[spot][0],
-                           self.neutral_spots[spot][1])
-        self.body.worldCenter = vec
+        self.body.position = Box2D.b2Vec2(self.neutral_spots[spot][0],
+                                        self.neutral_spots[spot][1])
         self.body.linearVelocity = (0, 0)
 
     def occupied(self, spot):
