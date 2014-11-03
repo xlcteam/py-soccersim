@@ -8,6 +8,7 @@ class Env:
         self.width = field_size[0]
         self.height = field_size[1]
         self.display = display
+        self.robots_out = {'A': [False, False], 'B': [False, False]}
 
         self.debug = debug
 

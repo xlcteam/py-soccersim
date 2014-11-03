@@ -4,17 +4,19 @@ import math
 
 
 class Robot:
-    def __init__(self, env, pos, dims, rotation, color, b2world):
+    def __init__(self, env, pos, dims, rotation, color, name, b2world):
         self.env = env
         self.dims = dims
         self.rotation = rotation
         self.color = color
         self.radius = (21*3)//2
+        self.name = name
 
         self.rot_mat = (-math.sin(math.radians(self.rotation)),
                         math.sin(math.radians(self.rotation)))
 
         self.dragging = False
+        self.out = False
 
         self.vec = (0, 0)
 
@@ -56,8 +58,30 @@ class Robot:
         rect = pygame.Rect(pos.x - self.radius, pos.y - self.radius, 0, 0)
         self.env.display.blit(self.image, rect)
 
+    def out_of_bounds(self):
+        if self.rect.top < 73 or self.rect.left < 73 or \
+                self.rect.left > 656 or self.rect.top > 473:
+            return True
+        return False
+
+    def move_outside(self, team):
+        x = 0 + self.radius if team == 'A' else self.env.width - self.radius
+        if self.env.robots_out[team] == [True, True]:
+            if team == 'A':
+                x = self.radius * 3
+            else:
+                x = self.env.width - self.radius * 3  
+
+        self.body.position = Box2D.b2Vec2(x, self.env.height + self.radius)
+
     def update(self):
         vec = (0, 0)
+        if not self.out and self.out_of_bounds():
+            self.out = True
+            self.env.robots_out[self.name[0]][int(self.name[1])-1] = True
+            self.dragging = False
+            self.move_outside(self.name[0])
+
         if not self.dragging:
             vec = self.vec
         self.body.linearVelocity = vec

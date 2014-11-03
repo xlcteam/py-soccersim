@@ -48,10 +48,14 @@ if __name__ == "__main__":
 
     env = Env('teamA', 'teamB', [WIDTH, HEIGHT], display, debug=True)
 
-    robotA1 = Robot(env, (140, 200), (21*3, 21*3), -90, (255, 0, 0), b2world)
-    robotA2 = Robot(env, (140, 356), (21*3, 21*3), -90, (255, 0, 122), b2world)
-    robotB1 = Robot(env, (580, 200), (21*3, 21*3), 90, (0, 255, 0), b2world)
-    robotB2 = Robot(env, (580, 356), (21*3, 21*3), 90, (0, 255, 122), b2world)
+    robotA1 = Robot(env, (140, 200), (21*3, 21*3), -90, (255, 0, 0), 'A1',
+                    b2world)
+    robotA2 = Robot(env, (140, 356), (21*3, 21*3), -90, (255, 0, 122), 'A2',
+                    b2world)
+    robotB1 = Robot(env, (580, 200), (21*3, 21*3), 90, (0, 255, 0), 'B1',
+                    b2world)
+    robotB2 = Robot(env, (580, 356), (21*3, 21*3), 90, (0, 255, 122), 'B2',
+                    b2world)
 
     robots = []
     robo_threads = []
