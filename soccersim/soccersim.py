@@ -115,6 +115,7 @@ if __name__ == "__main__":
                     robot.event_response(event)
                 ball.event_response(event)
 
+        display.fill((0, 86, 27))
         env.draw_field()
         for robot in robots:
             robot.update()
