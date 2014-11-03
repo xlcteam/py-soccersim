@@ -63,8 +63,12 @@ class Ball:
 
     def move_to_uns(self, spot):
         self.body.position = Box2D.b2Vec2(self.neutral_spots[spot][0],
-                                        self.neutral_spots[spot][1])
+                                          self.neutral_spots[spot][1])
         self.body.linearVelocity = (0, 0)
+
+    def stop(self):
+        self.body.linearVelocity = (0, 0)
+        self.body.angularVelocity = 0.0
 
     def occupied(self, spot):
         """Return true/false whether the spot is occupied"""
@@ -101,11 +105,13 @@ class Ball:
                 self.env.teamA_add_goal()
                 self.body.position = Box2D.b2Vec2(self.field[0]/2,
                                                   self.field[1]/2)
+                self.stop()
                 return True
             elif self.rect.left > 654:
                 self.env.teamB_add_goal()
                 self.body.position = Box2D.b2Vec2(self.field[0]/2,
                                                   self.field[1]/2)
+                self.stop()
                 return True
 
         return False
