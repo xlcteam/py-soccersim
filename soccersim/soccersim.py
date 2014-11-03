@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 import imp
+import os
 
 import Box2D
 from Box2D.b2 import *
@@ -43,6 +44,8 @@ if __name__ == "__main__":
     pygame.display.set_caption('SoccerSim')
 
     clock = pygame.time.Clock()
+
+    font = pygame.font.Font(None, 60)
 
     b2world = Box2D.b2World(gravity=(0, 0), doSleep=False)
 
@@ -120,6 +123,15 @@ if __name__ == "__main__":
                 ball.event_response(event)
 
         display.fill((0, 86, 27))
+
+        # for better code readability rend is pygame.font.Font.render
+        score_image = font.render('{0} : {1}'.format(env.teamAscore,
+                                                     env.teamBscore),
+                                  True, (255, 255, 255))
+        textpos = score_image.get_rect(centerx=WIDTH/2,
+                                       centery=HEIGHT+TABLE_HEIGHT/2)
+        display.blit(score_image, textpos)
+
         env.draw_field()
         for robot in robots:
             robot.update()
