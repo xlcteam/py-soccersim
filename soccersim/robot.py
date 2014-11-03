@@ -48,7 +48,7 @@ class Robot:
             restitution=0.4
         )
 
-        self.body.mass = 10.0
+        self.body.mass = 100.0
 
     def draw(self):
         pos = self.body.worldCenter
@@ -70,7 +70,7 @@ class Robot:
             if team == 'A':
                 x = self.radius * 3
             else:
-                x = self.env.width - self.radius * 3  
+                x = self.env.width - self.radius * 3
 
         self.body.position = Box2D.b2Vec2(x, self.env.height + self.radius)
 

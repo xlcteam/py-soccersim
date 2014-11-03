@@ -30,7 +30,7 @@ class Ball:
         self.body.CreateCircleFixture(
             radius=self.radius,
             density=1.0,
-            friction=0.3,
+            friction=0.5,
             restitution=0.4,
         )
 
