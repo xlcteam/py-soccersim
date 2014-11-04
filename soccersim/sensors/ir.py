@@ -30,4 +30,4 @@ class IRSensor:
         else:
             sensor = math.ceil((angle-(360/21))/((360-360/21)/6)) + 1
 
-        return sensor
+        return int(sensor)

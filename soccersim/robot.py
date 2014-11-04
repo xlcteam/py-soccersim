@@ -4,6 +4,8 @@ import math
 
 from sensors.ir import IRSensor
 
+from robothread import RoboException
+
 
 class Robot:
     def __init__(self, env, pos, dims, rotation, color, name, b2world):
@@ -13,6 +15,8 @@ class Robot:
         self.color = color
         self.radius = (21*3)//2
         self.name = name
+
+        self.do_termination = False
 
         self.rot_mat = (-math.sin(math.radians(self.rotation)),
                         math.sin(math.radians(self.rotation)))
@@ -106,28 +110,51 @@ class Robot:
             self.body.position = Box2D.b2Vec2(event.pos[0], event.pos[1])
             # self.body.SetPosition(vec) # doesnt work...
 
+    def terminate(self):
+        self.do_termination = True
+
+    def __terminate__(self):
+        raise RoboException
+
     def forward(self, speed):
         self.vec = (speed, 0)
         self.rotatize()
 
     def reverse(self, speed):
+        if self.do_termination:
+            self.__terminate__()
+
         self.vec = (-speed, 0)
         self.rotatize()
 
     def left(self, speed):
+        if self.do_termination:
+            self.__terminate__()
+
         self.vec = (0, speed)
         self.rotatize()
 
     def right(self, speed):
+        if self.do_termination:
+            self.__terminate__()
+
         self.vec = (0, -speed)
         self.rotatize()
 
     def stop(self):
+        if self.do_termination:
+            self.__terminate__()
+
         self.vec = (0, 0)
 
     def rotatize(self):
         self.vec = (self.vec[0] * self.rot_mat[0],
                     self.vec[1] * self.rot_mat[1])
 
-    def wait(self, time):
-        pygame.time.delay(time)
+    def wait(self, milisec):
+        while milisec > 1:
+            step = 100 if milisec > 500 else milisec
+            milisec -= pygame.time.delay(step)
+
+            if self.do_termination:
+                self.__terminate__()

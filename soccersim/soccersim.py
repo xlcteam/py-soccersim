@@ -148,3 +148,5 @@ if __name__ == "__main__":
         clock.tick(FPS)
 
     pygame.quit()
+    for robot in robots:
+        robot.terminate()
