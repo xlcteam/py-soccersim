@@ -6,6 +6,8 @@ import math
 class Ball:
     def __init__(self, env, pos, dims, color, field, robots, b2world):
         self.env = env
+        self.env.set_ball(self)
+
         self.dims = dims
         self.color = color
         self.rect = pygame.Rect(pos[0], pos[1], 0, 0)

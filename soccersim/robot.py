@@ -2,6 +2,8 @@ import pygame
 import Box2D
 import math
 
+from sensors.ir import IRSensor
+
 
 class Robot:
     def __init__(self, env, pos, dims, rotation, color, name, b2world):
@@ -49,6 +51,8 @@ class Robot:
         )
 
         self.body.mass = 100.0
+
+        self.ir_sensor = IRSensor(self, (10, 0))
 
     def draw(self):
         pos = self.body.worldCenter

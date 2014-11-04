@@ -8,6 +8,8 @@ class Env:
         self.width = field_size[0]
         self.height = field_size[1]
         self.display = display
+        self.ball = None
+
         self.robots_out = {'A': [False, False], 'B': [False, False]}
 
         self.debug = debug
@@ -26,3 +28,6 @@ class Env:
 
     def draw_field(self):
         self.display.blit(self.field, [0, 0])
+
+    def set_ball(self, ball):
+        self.ball = ball
