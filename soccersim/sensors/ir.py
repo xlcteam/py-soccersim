@@ -23,11 +23,11 @@ class IRSensor:
 
         sensor = 0
 
-        if (angle > (360-360/21)):
+        if (angle > (360-360/21.0)):
             sensor = 7
-        elif (angle < (360/21)):
+        elif (angle < (360/21.0)):
             sensor = 1
         else:
-            sensor = math.ceil((angle-(360/21))/((360-360/21)/6)) + 1
+            sensor = math.ceil((angle-(360/21.0))/((360-360/21.0)/6)) + 1
 
         return int(sensor)

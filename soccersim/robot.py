@@ -89,6 +89,7 @@ class Robot:
             self.env.robots_out[self.name[0]][int(self.name[1])-1] = True
             self.dragging = False
             self.move_outside(self.name[0])
+            self.terminate()
 
         if not self.dragging:
             vec = self.vec
@@ -140,6 +141,30 @@ class Robot:
 
         self.vec = (0, -speed)
         self.rotatize()
+
+    def forward_left(self, speed):
+        if self.do_termination:
+            self.__terminate__()
+
+        self.vec = (speed/math.sqrt(2), -(speed/(math.sqrt(2))))
+
+    def forward_right(self, speed):
+        if self.do_termination:
+            self.__terminate__()
+
+        self.vec = (speed/math.sqrt(2), (speed/(math.sqrt(2))))
+
+    def reverse_left(self, speed):
+        if self.do_termination:
+            self.__terminate__()
+
+        self.vec = (-(speed/math.sqrt(2)), -(speed/(math.sqrt(2))))
+
+    def reverse_right(self, speed):
+        if self.do_termination:
+            self.__terminate__()
+
+        self.vec = (-(speed/math.sqrt(2)), (speed/(math.sqrt(2))))
 
     def stop(self):
         if self.do_termination:
