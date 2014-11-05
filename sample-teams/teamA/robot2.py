@@ -1,4 +1,9 @@
-def main(robot):
+import pygame
+from dummy_robot import DummyRobot
+
+
+def main(arg):
+    robot = DummyRobot(arg)
     while True:
         val = robot.ir_sensor.read()
         if val == 1:

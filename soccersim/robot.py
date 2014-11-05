@@ -8,7 +8,9 @@ from robothread import RoboException
 
 
 class Robot:
-    def __init__(self, env, pos, dims, rotation, color, name, b2world):
+    def __init__(self, env, pos, dims, rotation, color, name, b2world,
+                 manager):
+
         self.env = env
         self.dims = dims
         self.rotation = rotation
@@ -16,10 +18,17 @@ class Robot:
         self.radius = (21*3)//2
         self.name = name
 
+        self.i = 0
+
         self.do_termination = False
 
         self.rot_mat = (-math.sin(math.radians(self.rotation)),
                         math.sin(math.radians(self.rotation)))
+
+        self.d = manager.dict()
+        self.d['vec'] = (0, 0)
+        self.d['ir'] = 0
+        self.d['rot_mat'] = self.rot_mat
 
         self.dragging = False
         self.out = False
@@ -83,6 +92,8 @@ class Robot:
         self.body.position = Box2D.b2Vec2(x, self.env.height + self.radius)
 
     def update(self):
+        self.i += 1
+
         vec = (0, 0)
         if not self.out and self.out_of_bounds():
             self.out = True
@@ -91,8 +102,15 @@ class Robot:
             self.move_outside(self.name[0])
             self.terminate()
 
+        if self.i == 9:
+            self.i = 0
+            self.d['ir'] = self.ir_sensor.read()
+
         if not self.dragging:
-            vec = self.vec
+            if hasattr(self, 'd'):
+                vec = self.d['vec']
+            else:
+                vec = self.vec
         self.body.linearVelocity = vec
 
     def mouse_over(self, pos):
@@ -112,74 +130,4 @@ class Robot:
             # self.body.SetPosition(vec) # doesnt work...
 
     def terminate(self):
-        self.do_termination = True
-
-    def __terminate__(self):
-        raise RoboException
-
-    def forward(self, speed):
-        self.vec = (speed, 0)
-        self.rotatize()
-
-    def reverse(self, speed):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (-speed, 0)
-        self.rotatize()
-
-    def left(self, speed):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (0, speed)
-        self.rotatize()
-
-    def right(self, speed):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (0, -speed)
-        self.rotatize()
-
-    def forward_left(self, speed):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (speed/math.sqrt(2), -(speed/(math.sqrt(2))))
-
-    def forward_right(self, speed):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (speed/math.sqrt(2), (speed/(math.sqrt(2))))
-
-    def reverse_left(self, speed):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (-(speed/math.sqrt(2)), -(speed/(math.sqrt(2))))
-
-    def reverse_right(self, speed):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (-(speed/math.sqrt(2)), (speed/(math.sqrt(2))))
-
-    def stop(self):
-        if self.do_termination:
-            self.__terminate__()
-
-        self.vec = (0, 0)
-
-    def rotatize(self):
-        self.vec = (self.vec[0] * self.rot_mat[0],
-                    self.vec[1] * self.rot_mat[1])
-
-    def wait(self, milisec):
-        while milisec > 1:
-            step = 100 if milisec > 500 else milisec
-            milisec -= pygame.time.delay(step)
-
-            if self.do_termination:
-                self.__terminate__()
+        self.proc.terminate()
