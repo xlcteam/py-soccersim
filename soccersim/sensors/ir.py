@@ -30,4 +30,8 @@ class IRSensor:
         else:
             sensor = math.ceil((angle-(360/21.0))/((360-360/21.0)/6)) + 1
 
+        if self.robot.rotation == 90:
+            s = ((int(sensor)-3) + 7) % 7
+            return s if s != 0 else 7
+
         return int(sensor)

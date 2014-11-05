@@ -1,4 +1,6 @@
 import math
+import sys
+import pygame
 
 
 class DummyIRSensor:
@@ -17,43 +19,64 @@ class DummyRobot:
         self.rot_mat = dict['rot_mat']
 
     def forward(self, speed):
+
+        if self.dict['die']:
+            sys.exit(0)
+
         self.dict['vec'] = (speed, 0)
         self.rotatize()
 
     def reverse(self, speed):
+        if self.dict['die']:
+            sys.exit(0)
 
         self.dict['vec'] = (-speed, 0)
         self.rotatize()
 
     def left(self, speed):
+        if self.dict['die']:
+            sys.exit(0)
 
         self.dict['vec'] = (0, speed)
         self.rotatize()
 
     def right(self, speed):
+        if self.dict['die']:
+            sys.exit(0)
 
         self.dict['vec'] = (0, -speed)
         self.rotatize()
 
     def stop(self):
+        if self.dict['die']:
+            sys.exit(0)
+
         self.dict['vec'] = (0, 0)
 
     def forward_left(self, speed):
+        if self.dict['die']:
+            sys.exit(0)
 
         self.dict['vec'] = (speed/math.sqrt(2), -(speed/(math.sqrt(2))))
         self.rotatize()
 
     def forward_right(self, speed):
+        if self.dict['die']:
+            sys.exit(0)
 
         self.dict['vec'] = (speed/math.sqrt(2), (speed/(math.sqrt(2))))
         self.rotatize()
 
     def reverse_left(self, speed):
+        if self.dict['die']:
+            sys.exit(0)
 
         self.dict['vec'] = (-(speed/math.sqrt(2)), -(speed/(math.sqrt(2))))
         self.rotatize()
 
     def reverse_right(self, speed):
+        if self.dict['die']:
+            sys.exit(0)
 
         self.dict['vec'] = (-(speed/math.sqrt(2)), (speed/(math.sqrt(2))))
         self.rotatize()

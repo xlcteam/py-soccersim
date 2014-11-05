@@ -23,11 +23,12 @@ class Robot:
         self.do_termination = False
 
         self.rot_mat = (-math.sin(math.radians(self.rotation)),
-                        math.sin(math.radians(self.rotation)))
+                        -math.sin(math.radians(self.rotation)))
 
         self.d = manager.dict()
         self.d['vec'] = (0, 0)
         self.d['ir'] = 0
+        self.d['die'] = False
         self.d['rot_mat'] = self.rot_mat
 
         self.dragging = False
@@ -101,16 +102,15 @@ class Robot:
             self.dragging = False
             self.move_outside(self.name[0])
             self.terminate()
+            self.d['vec'] = (0, 0)
+            self.d['die'] = False
 
         if self.i == 9:
             self.i = 0
             self.d['ir'] = self.ir_sensor.read()
 
         if not self.dragging:
-            if hasattr(self, 'd'):
-                vec = self.d['vec']
-            else:
-                vec = self.vec
+            vec = self.d['vec']
         self.body.linearVelocity = vec
 
     def mouse_over(self, pos):
@@ -130,4 +130,4 @@ class Robot:
             # self.body.SetPosition(vec) # doesnt work...
 
     def terminate(self):
-        self.proc.terminate()
+        self.d['die'] = True

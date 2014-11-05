@@ -1,4 +1,8 @@
+from dummy_robot import DummyRobot
+
+
 def main(arg):
+    robot = DummyRobot(arg)
     return
     while True:
         val = robot.ir_sensor.read()

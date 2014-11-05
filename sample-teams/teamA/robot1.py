@@ -1,4 +1,3 @@
-import pygame
 from dummy_robot import DummyRobot
 
 
