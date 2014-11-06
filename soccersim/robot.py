@@ -127,7 +127,6 @@ class Robot:
 
         elif event.type == pygame.MOUSEMOTION and self.dragging:
             self.body.position = Box2D.b2Vec2(event.pos[0], event.pos[1])
-            # self.body.SetPosition(vec) # doesnt work...
 
     def terminate(self):
         self.d['die'] = True
