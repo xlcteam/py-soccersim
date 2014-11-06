@@ -108,12 +108,14 @@ class Ball:
                 self.body.position = Box2D.b2Vec2(self.field[0]/2,
                                                   self.field[1]/2)
                 self.stop()
+                self.env.reset_robots()
                 return True
             elif self.rect.left > 654:
                 self.env.teamB_add_goal()
                 self.body.position = Box2D.b2Vec2(self.field[0]/2,
                                                   self.field[1]/2)
                 self.stop()
+                self.env.reset_robots()
                 return True
 
         return False

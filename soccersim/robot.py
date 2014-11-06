@@ -18,6 +18,8 @@ class Robot:
         self.radius = (21*3)//2
         self.name = name
 
+        self.default_pos = pos
+
         self.i = 0
 
         self.do_termination = False
@@ -131,3 +133,6 @@ class Robot:
 
     def terminate(self):
         self.d['die'] = True
+
+    def move_to_pos(self, pos):
+        self.body.position = Box2D.b2Vec2(pos[0], pos[1])

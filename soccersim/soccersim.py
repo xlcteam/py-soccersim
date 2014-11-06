@@ -58,6 +58,8 @@ if __name__ == "__main__":
     robots.append(robotB1)
     robots.append(robotB2)
 
+    env.set_robots(robots)
+
     rA1 = imp.load_source('robot1', sys.argv[1] + '/robot1.py')
     robotA1.proc = Process(target=rA1.main, kwargs={'arg': robotA1.d})
 
