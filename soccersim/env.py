@@ -34,7 +34,7 @@ class Env:
 
     def reset_robots(self):
         for robot in self.robots:
-            robot.d['vec'] = (0, 0)
+            robot.stop()
             robot.move_to_pos(robot.default_pos)
 
     def set_ball(self, ball):

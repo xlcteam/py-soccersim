@@ -61,16 +61,16 @@ if __name__ == "__main__":
     env.set_robots(robots)
 
     rA1 = imp.load_source('robot1', sys.argv[1] + '/robot1.py')
-    robotA1.proc = Process(target=rA1.main, kwargs={'arg': robotA1.d})
+    robotA1.proc = Process(target=rA1.main, kwargs={'arg': robotA1.data})
 
     rA2 = imp.load_source('robot2', sys.argv[1] + '/robot2.py')
-    robotA2.proc = Process(target=rA2.main, kwargs={'arg': robotA2.d})
+    robotA2.proc = Process(target=rA2.main, kwargs={'arg': robotA2.data})
 
     rB1 = imp.load_source('robot1', sys.argv[2] + '/robot1.py')
-    robotB1.proc = Process(target=rB1.main, kwargs={'arg': robotB1.d})
+    robotB1.proc = Process(target=rB1.main, kwargs={'arg': robotB1.data})
 
     rB2 = imp.load_source('robot2', sys.argv[2] + '/robot2.py')
-    robotB2.proc = Process(target=rB2.main, kwargs={'arg': robotB2.d})
+    robotB2.proc = Process(target=rB2.main, kwargs={'arg': robotB2.data})
 
     ball = Ball(env, (WIDTH//2, HEIGHT//2), (8*3, 8*3), (100, 75, 81),
                 (WIDTH, HEIGHT), robots, b2world)

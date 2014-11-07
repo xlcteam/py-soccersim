@@ -22,16 +22,16 @@ class Robot:
 
         self.i = 0
 
-        self.do_termination = False
-
         self.rot_mat = (-math.sin(math.radians(self.rotation)),
                         -math.sin(math.radians(self.rotation)))
 
-        self.d = manager.dict()
-        self.d['vec'] = (0, 0)
-        self.d['ir'] = 0
-        self.d['die'] = False
-        self.d['rot_mat'] = self.rot_mat
+        # a dictionary which syncs data between user code process and
+        # pygame/Box2D process
+        self.data = manager.dict()
+        self.data['vec'] = (0, 0)
+        self.data['ir'] = 0
+        self.data['die'] = False
+        self.data['rot_mat'] = self.rot_mat
 
         self.dragging = False
         self.out = False
@@ -104,15 +104,16 @@ class Robot:
             self.dragging = False
             self.move_outside(self.name[0])
             self.terminate()
-            self.d['vec'] = (0, 0)
-            self.d['die'] = False
+            self.stop()
+
+            self.data['die'] = False
 
         if self.i == 9:
             self.i = 0
-            self.d['ir'] = self.ir_sensor.read()
+            self.data['ir'] = self.ir_sensor.read()
 
         if not self.dragging:
-            vec = self.d['vec']
+            vec = self.data['vec']
         self.body.linearVelocity = vec
 
     def mouse_over(self, pos):
@@ -131,7 +132,10 @@ class Robot:
             self.body.position = Box2D.b2Vec2(event.pos[0], event.pos[1])
 
     def terminate(self):
-        self.d['die'] = True
+        self.data['die'] = True
 
     def move_to_pos(self, pos):
         self.body.position = Box2D.b2Vec2(pos[0], pos[1])
+
+    def stop(self):
+        self.data['vec'] = (0, 0)
