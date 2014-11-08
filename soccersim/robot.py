@@ -36,19 +36,17 @@ class Robot:
         self.dragging = False
         self.out = False
 
-        self.vec = (0, 0)
-
-        self.originalImg = pygame.Surface(self.dims, pygame.SRCALPHA, 32)
-        self.originalImg.convert_alpha()
+        self.original_img = pygame.Surface(self.dims, pygame.SRCALPHA, 32)
+        self.original_img.convert_alpha()
 
         center = [self.dims[0]/2, self.dims[1]/2]
 
-        pygame.draw.circle(self.originalImg, self.color, center, self.radius)
-        pygame.draw.circle(self.originalImg, (255, 255, 255),
+        pygame.draw.circle(self.original_img, self.color, center, self.radius)
+        pygame.draw.circle(self.original_img, (255, 255, 255),
                            [self.dims[0]/2, self.dims[1]/10],
                            self.dims[1]/5)
 
-        self.image = pygame.transform.rotate(self.originalImg, self.rotation)
+        self.image = pygame.transform.rotate(self.original_img, self.rotation)
         self.rect = pygame.Rect(pos[0], pos[1], 0, 0)
 
         self.body = b2world.CreateDynamicBody(
