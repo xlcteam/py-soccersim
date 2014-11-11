@@ -1,4 +1,6 @@
 import pygame
+import sys
+import os
 
 
 class Env:
@@ -17,7 +19,9 @@ class Env:
 
         self.debug = debug
 
-        self.field = pygame.image.load('img/field.png')
+        self.dir = os.path.dirname(os.path.realpath(__file__)) + os.sep
+
+        self.field = pygame.image.load(self.dir + 'img/field.png')
 
         self.halftime = 1
         self.teamAscore = 0
