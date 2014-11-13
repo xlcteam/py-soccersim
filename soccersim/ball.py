@@ -104,14 +104,14 @@ class Ball:
     def scored(self):
         if self.rect.top >= 200 and self.rect.top <= 350:
             if self.rect.left < 73:
-                self.env.teamA_add_goal()
+                self.env.teamB_add_goal()
                 self.body.position = Box2D.b2Vec2(self.field[0]/2,
                                                   self.field[1]/2)
                 self.stop()
                 self.env.reset_robots()
                 return True
             elif self.rect.left > 654:
-                self.env.teamB_add_goal()
+                self.env.teamA_add_goal()
                 self.body.position = Box2D.b2Vec2(self.field[0]/2,
                                                   self.field[1]/2)
                 self.stop()
