@@ -123,8 +123,7 @@ class Ball:
     def stay_in(self):
         if self.scored():
             self.dragging = False
-            return
-        if self.ball_outside():
+        elif self.ball_outside():
             self.check_uns()
 
     def mouse_over(self, pos):
