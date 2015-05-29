@@ -32,8 +32,8 @@ class Ball:
         self.body.CreateCircleFixture(
             radius=self.radius,
             density=1.0,
-            friction=0.5,
-            restitution=0.4,
+            friction=0.1,
+            restitution=0.2,
         )
 
         self.neutral_spots = {

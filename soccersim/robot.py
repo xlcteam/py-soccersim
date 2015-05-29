@@ -8,8 +8,7 @@ from robothread import RoboException
 
 
 class Robot:
-    def __init__(self, env, pos, dims, rotation, color, name, b2world,
-                 manager):
+    def __init__(self, env, pos, dims, rotation, color, name, b2world):
 
         self.env = env
         self.dims = dims
@@ -24,14 +23,6 @@ class Robot:
 
         self.rot_mat = (-math.sin(math.radians(self.rotation)),
                         -math.sin(math.radians(self.rotation)))
-
-        # a dictionary which syncs data between user code process and
-        # pygame/Box2D process
-        self.data = manager.dict()
-        self.data['vec'] = (0, 0)
-        self.data['ir'] = 0
-        self.data['die'] = False
-        self.data['rot_mat'] = self.rot_mat
 
         self.dragging = False
         self.out = False
@@ -52,21 +43,23 @@ class Robot:
         self.body = b2world.CreateDynamicBody(
             position=(pos[0], pos[1]),
             bullet=True,
-            angularDamping=0.3,
-            linearDamping=0.15,
+            angularDamping=0.1,
+            linearDamping=0.05,
             angle=math.radians(self.rotation)
         )
 
         self.body.CreateCircleFixture(
             radius=self.radius,
-            density=10.0,
+            density=5.0,
             friction=0,
-            restitution=0.4
+            restitution=0.5
         )
 
         self.body.mass = 100.0
 
         self.ir_sensor = IRSensor(self, (10, 0))
+
+        self.vec = (0, 0)
 
     def draw(self):
         pos = self.body.worldCenter
@@ -101,18 +94,14 @@ class Robot:
             self.env.robots_out[self.name[0]][int(self.name[1])-1] = True
             self.dragging = False
             self.move_outside(self.name[0])
-            self.terminate()
             self.stop()
 
-            self.data['die'] = False
-
-        if self.i == 9:
-            self.i = 0
-            self.data['ir'] = self.ir_sensor.read()
-
         if not self.dragging:
-            vec = self.data['vec']
+            vec = self.vec
         self.body.linearVelocity = vec
+
+    def sense(self):
+        pass
 
     def mouse_over(self, pos):
         wc = self.body.worldCenter
@@ -129,11 +118,44 @@ class Robot:
         elif event.type == pygame.MOUSEMOTION and self.dragging:
             self.body.position = Box2D.b2Vec2(event.pos[0], event.pos[1])
 
-    def terminate(self):
-        self.data['die'] = True
-
     def move_to_pos(self, pos):
         self.body.position = Box2D.b2Vec2(pos[0], pos[1])
 
     def stop(self):
-        self.data['vec'] = (0, 0)
+        self.vec = (0, 0)
+
+    def forward(self, speed):
+        self.vec = (speed, 0)
+        self.rotatize()
+
+    def reverse(self, speed):
+        self.vec = (-speed, 0)
+        self.rotatize()
+
+    def left(self, speed):
+        self.vec = (0, speed)
+        self.rotatize()
+
+    def right(self, speed):
+        self.vec = (0, -speed)
+        self.rotatize()
+
+    def forward_left(self, speed):
+        self.vec = (speed/math.sqrt(2), -(speed/(math.sqrt(2))))
+        self.rotatize()
+
+    def forward_right(self, speed):
+        self.vec = (speed/math.sqrt(2), (speed/(math.sqrt(2))))
+        self.rotatize()
+
+    def reverse_left(self, speed):
+        self.vec = (-(speed/math.sqrt(2)), -(speed/(math.sqrt(2))))
+        self.rotatize()
+
+    def reverse_right(self, speed):
+        self.vec = (-(speed/math.sqrt(2)), (speed/(math.sqrt(2))))
+        self.rotatize()
+
+    def rotatize(self):
+        self.vec = (self.vec[0] * self.rot_mat[0],
+                    self.vec[1] * self.rot_mat[1])

@@ -12,8 +12,6 @@ from robot import Robot
 from objects import BoxProp
 from ball import Ball
 
-from multiprocessing import Process, Manager
-
 if __name__ == "__main__":
     WIDTH = 729
     HEIGHT = 546
@@ -40,37 +38,35 @@ if __name__ == "__main__":
 
     env = Env('teamA', 'teamB', [WIDTH, HEIGHT], display, debug=True)
 
-    manager = Manager()
-
     robotA1 = Robot(env, (140, 200), (21*3, 21*3), -90, (255, 0, 0), 'A1',
-                    b2world, manager)
+                    b2world)
     robotA2 = Robot(env, (140, 356), (21*3, 21*3), -90, (255, 0, 122), 'A2',
-                    b2world, manager)
+                    b2world)
     robotB1 = Robot(env, (580, 200), (21*3, 21*3), 90, (0, 255, 0), 'B1',
-                    b2world, manager)
+                    b2world)
     robotB2 = Robot(env, (580, 356), (21*3, 21*3), 90, (0, 255, 122), 'B2',
-                    b2world, manager)
+                    b2world)
 
     robots = []
 
-    robots.append(robotA1)
-    robots.append(robotA2)
     robots.append(robotB1)
     robots.append(robotB2)
+    robots.append(robotA2)
+    robots.append(robotA1)
 
     env.set_robots(robots)
 
     rA1 = imp.load_source('robot1', sys.argv[1] + '/robot1.py')
-    robotA1.proc = Process(target=rA1.main, kwargs={'arg': robotA1.data})
+    robotA1.act_handler = rA1.act
 
     rA2 = imp.load_source('robot2', sys.argv[1] + '/robot2.py')
-    robotA2.proc = Process(target=rA2.main, kwargs={'arg': robotA2.data})
+    robotA2.act_handler = rA2.act
 
     rB1 = imp.load_source('robot1', sys.argv[2] + '/robot1.py')
-    robotB1.proc = Process(target=rB1.main, kwargs={'arg': robotB1.data})
+    robotB1.act_handler = rB1.act
 
     rB2 = imp.load_source('robot2', sys.argv[2] + '/robot2.py')
-    robotB2.proc = Process(target=rB2.main, kwargs={'arg': robotB2.data})
+    robotB2.act_handler = rB2.act
 
     ball = Ball(env, (WIDTH//2, HEIGHT//2), (8*3, 8*3), (100, 75, 81),
                 (WIDTH, HEIGHT), robots, b2world)
@@ -96,10 +92,6 @@ if __name__ == "__main__":
     props.append(BoxProp(env, size=[3, HEIGHT], pos=[WIDTH, HEIGHT/2],
                          world=b2world))
 
-    # start robo processes (user specified code for robots)
-    for robot in robots:
-        robot.proc.start()
-
     running = True
     while running:
         for event in pygame.event.get():
@@ -123,6 +115,9 @@ if __name__ == "__main__":
 
         env.draw_field()
         for robot in robots:
+            robot.sense()
+            robot.act_handler(robot)
+
             robot.update()
             robot.draw()
 
@@ -137,5 +132,3 @@ if __name__ == "__main__":
         clock.tick(FPS)
 
     pygame.quit()
-    for robot in robots:
-        robot.proc.terminate()
