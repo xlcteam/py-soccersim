@@ -104,6 +104,7 @@ class Robot:
         pass
 
     def mouse_over(self, pos):
+        """Checks whether the mouse is over the robot."""
         wc = self.body.worldCenter
         dx = wc.x - pos[0]
         dy = wc.y - pos[1]
