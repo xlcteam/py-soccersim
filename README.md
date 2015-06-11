@@ -3,6 +3,8 @@ py-soccersim
 
 SoccerSim in Python
 
+![Screenshot of py-soccersim](image.png)
+
 Usage
 -----
 
