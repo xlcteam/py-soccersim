@@ -127,6 +127,7 @@ class Ball:
             self.check_uns()
 
     def mouse_over(self, pos):
+        """Checks whether the mouse is over the ball."""
         dx = self.rect.left - pos[0]
         dy = self.rect.top - pos[1]
 
